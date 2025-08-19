@@ -1,11 +1,10 @@
 
-function App() {
+import ChatWindow from "./components/ChatWindow";
+import { useChat } from "./hooks/useChat";
 
-  return (
-    <h1 className="text-3xl text-center font-bold underline">
-      Hello world!
-    </h1>
-  )
+function App() {
+  const { messages, sendMessage } = useChat();
+  return <ChatWindow messages={messages} onSend={sendMessage} />;
 }
 
-export default App
+export default App;
