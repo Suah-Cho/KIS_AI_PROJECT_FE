@@ -1,54 +1,24 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# AI 챗봇 프론트엔드
+### 폴더 구조
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+├─ public/                     # 정적 파일 (favicon, index.html 등)
+│
+├─ src/
+│  ├─ assets/                  # 이미지, 아이콘, 폰트 등
+│  │
+│  ├─ components/              # 재사용 가능한 UI 컴포넌트
+│  │
+│  ├─ lib/                     # 유틸리티·공통 로직
+│  │   ├─ api.ts               # API 호출 함수
+│  │   └─ utils.ts             # 날짜 포맷, 문자열 처리 등
+│  │
+│  ├─ styles/                  # Tailwind 설정·전역 스타일
+│  │   └─ index.css            # Tailwind 기본 import
+│  │
+│  ├─ App.tsx                  # 라우터와 레이아웃 정의
+│  └─ index.tsx                # 진입점
+│
+├─ tailwind.config.js          # Tailwind 설정 파일
+├─ tsconfig.json               # Typescript 설정
+└─ package.json
 ```
