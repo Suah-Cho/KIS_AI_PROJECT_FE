@@ -1,5 +1,5 @@
 
-import ChatWindow from "./components/ChatWindow";
+import ChatWindow from "./components/chat/ChatWindow";
 import { useChat } from "./hooks/useChat";
 
 function App() {
