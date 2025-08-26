@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import type { Message } from "../../types/chat";
-import MessageList from '../message/MessageList';
-import ChatInput from './ChatInput';
 import SideBar from "../sideBar/SideBar";
+import MessageWindow from "../message/MessageWindow";
 
 interface Props{
     messages: Message[];
@@ -18,10 +17,8 @@ export default function ChatWindow({ messages, onSend }: Props) {
         <div className="flex h-screen">
             <SideBar isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} onNewChat={() => alert("새 채팅 시작")}/>
             <div className="flex-1">
-                <div className="flex flex-col h-screen bg-gray-100">
-                    <MessageList messages={messages} />
-                    <ChatInput onSend={onSend} />
-                </div>
+                <MessageWindow messages={messages} onSend={ onSend } />
+                {/* <MessageInput /> */}
             </div>
         </div>
     )

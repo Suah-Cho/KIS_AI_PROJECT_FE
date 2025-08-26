@@ -1,11 +1,9 @@
 import { useRef, useState } from "react";
-import { FiMenu, FiX, FiHome, FiUser, FiSettings} from "react-icons/fi";
-import { HiPencilSquare } from "react-icons/hi2";
-import SideProfile from "./sideProfile";
-import SideBody from "./sideBody";
-import SideNewChat from "./sideNewChat";
+import SideProfile from "./SideProfile";
+import SideNewChat from "./SideNewChat";
 import SideProfilePanel from "./SideProfilePanel";
 import SideBarCategoryDropdown from "./SideBarCategoryDropdown";
+import { TbCategoryFilled } from "react-icons/tb";
 
 export default function SideBar({
     isOpen, onToggle, onNewChat
@@ -32,12 +30,27 @@ export default function SideBar({
             />
 
             {/* 메뉴 목록 */}
-            <SideBody isOpen={isOpen} />
+            {/* <SideBody isOpen={isOpen} /> */}
 
             {/* 카테고리 드롭다운*/}
-            <div className="px-2 py-4">
-                <SideBarCategoryDropdown />
+            { isOpen && 
+                (
+                    <div className="px-2 py-4 border-b border-gray-700">
+                        <div className="flex items-center px-2 py-2 text-sm">
+                            <TbCategoryFilled className="mr-2" />
+                            <span className="">카테고리 선택</span>
+                        </div>
+                        <SideBarCategoryDropdown />
+                    </div>
+                )
+            }
+
+            { isOpen && (
+                <div className="px-4 py-4 text-sm text-gray-400">
+                채팅 기록
+                {/* 채팅 기록 컴포넌트 */}
             </div>
+            ) }
             
             <div className="mt-auto relative" ref={panelRef}>
                 {/* 하단 프로필 */}

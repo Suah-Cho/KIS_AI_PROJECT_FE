@@ -1,4 +1,3 @@
-import { FiUser, FiSettings, FiLogOut } from "react-icons/fi";
 import { IoSettingsSharp } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
 

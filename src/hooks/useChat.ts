@@ -4,7 +4,7 @@ import type { Message } from "../types/chat";
 
 export function useChat() {
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "안녕하세요! 무엇을 도와드릴까요?" },
+    // { role: "assistant", content: "안녕하세요! 무엇을 도와드릴까요?" },
   ]);
 
   const sendMessage = async (text: string) => {
