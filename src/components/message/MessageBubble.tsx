@@ -1,18 +1,28 @@
-import type { Message } from "../../types/chat";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import type { MessageBubbleProps } from "../../type/message";
 
-interface Props extends Message {}
+export default function MessageBubble({ role, content }: MessageBubbleProps) {
+  const isUser = role === "human";
 
-export default function MessageBubble({ role, content }: Props) {
-  const isUser = role === "user";
   return (
     <div
-      className={`p-2 rounded-lg max-w-xl ${
-        isUser
-          ? "ml-auto bg-blue-500 text-white"
-          : "mr-auto bg-gray-300 text-black"
+      className={`flex w-full my-2 ${
+        isUser ? "justify-end" : "justify-start"
       }`}
     >
-      {content}
+      <div
+        className={`px-4 py-2 rounded-lg max-w-[70%] break-words ${
+          isUser
+            ? "bg-gray-200 text-gray-900 rounded-br-none"
+            : "bg-gray-100 text-gray-900"
+        }`}
+      >
+        {/* 마크다운 렌더링 */}
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {content}      
+        </ReactMarkdown>
+      </div>
     </div>
   );
 }
