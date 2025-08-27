@@ -85,9 +85,9 @@ export default function MessageWindow() {
     const chatState = (
         <div className="flex flex-col flex-1 overflow-hidden">
             <div className="flex-1 min-h-0 overflow-y-auto p-4 w-full max-w-4xl mx-auto">
-                {isLoadingHistory && (
+                {/* {isLoadingHistory && (
                     <div className="text-gray-500 text-sm py-2">이전 대화를 불러오는 중...</div>
-                )}
+                )} */}
                 {messages.map((m, i) => (
                     <MessageBubble key={i} role={m.role} content={m.content} />
                 ))}

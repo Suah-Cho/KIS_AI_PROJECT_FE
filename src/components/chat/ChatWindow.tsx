@@ -15,7 +15,7 @@ export default function ChatWindow() {
     };
     
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
             <div className="flex h-screen">
                 <div className="h-full flex overflow-hidden">
                     <SideBar 
