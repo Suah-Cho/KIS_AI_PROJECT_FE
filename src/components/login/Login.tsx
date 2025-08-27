@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function LoginForm() {
+export default function Login() {
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
 
@@ -12,6 +12,7 @@ export default function LoginForm() {
 
     return (
         <>
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 w-full max-w-sm">
                 <h2 className="text-2xl font-bold mb-6 text-center">로그인</h2>
 
@@ -38,10 +39,11 @@ export default function LoginForm() {
                 {/* 로그인 버튼 */}
                 <button 
                     type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    className="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-400">
                     로그인
                 </button>
             </form>
+        </div>
         </>
     );
 }

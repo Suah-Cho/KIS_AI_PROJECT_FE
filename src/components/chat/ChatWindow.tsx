@@ -1,3 +1,4 @@
+
 // 전체 채팅 레이아웃
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
@@ -36,5 +37,5 @@ export default function ChatWindow() {
             </div>
         </BrowserRouter>
         
-    )
+    );
 }
