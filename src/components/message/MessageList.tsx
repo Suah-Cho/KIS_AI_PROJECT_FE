@@ -1,16 +1,13 @@
-import type { Message } from "../../types/chat";
-import MessageBubble from "./MessageBubble";
+// import type { MessageBubbleProps } from "../../type/message";
+// import MessageBubble from "./MessageBubble";
 
-interface Props {
-  messages: Message[];
-}
 
-export default function MessageList({ messages }: Props) {
-  return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-2">
-      {messages.map((m, i) => (
-        <MessageBubble key={i} role={m.role} content={m.content} />
-      ))}
-    </div>
-  );
-}
+// export default function MessageList({ messages }: { messages: MessageBubbleProps[] }) {
+//   if (messages.length === 0) {
+//     return (
+//       <div className="flex flex-col items-center justify-center h-full text-gray-500">
+
+//       </div>
+//     )
+//   }
+// }
