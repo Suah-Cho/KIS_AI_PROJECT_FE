@@ -4,6 +4,7 @@ import SideNewChat from "./SideNewChat";
 import SideProfilePanel from "./SideProfilePanel";
 import SideBarCategoryDropdown from "./SideBarCategoryDropdown";
 import { TbCategoryFilled } from "react-icons/tb";
+import SideChatHistory from "./SideChatHistory";
 
 export default function SideBar({
     isOpen, onToggle, onNewChat
@@ -49,6 +50,7 @@ export default function SideBar({
                 <div className="px-4 py-4 text-sm text-gray-400">
                 채팅 기록
                 {/* 채팅 기록 컴포넌트 */}
+                <SideChatHistory />
             </div>
             ) }
             
