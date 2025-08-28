@@ -2,17 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-.custom-scroll::-webkit-scrollbar {
+.light-scroll {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.15) transparent;
+}
+
+/* WebKit (Chromium, Safari, Edge) */
+.light-scroll::-webkit-scrollbar {
   width: 8px;
 }
-.custom-scroll::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-}
-.custom-scroll::-webkit-scrollbar-track {
+
+.light-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
-.custom-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
+.light-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15); /* 기본 연한 색 */
+  border-radius: 4px;
+}
+
+.light-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.28); /* hover 시 약간 진하게 */
+}
+
+/* 선택: 거의 안 보이게 하고 hover 시만 표시 */
+.light-scroll.hide-until-hover::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+.light-scroll.hide-until-hover:hover::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.18);
 }

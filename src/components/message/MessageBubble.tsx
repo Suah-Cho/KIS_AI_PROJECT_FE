@@ -12,10 +12,10 @@ export default function MessageBubble({ role, content }: MessageBubbleProps) {
       }`}
     >
       <div
-        className={`px-4 py-2 rounded-lg max-w-[70%] break-words ${
+        className={`px-4 py-2 rounded-lg break-words ${
           isUser
-            ? "bg-gray-200 text-gray-900 rounded-br-none"
-            : "bg-gray-100 text-gray-900"
+            ? "max-w-[70%] bg-gray-200 text-gray-900 rounded-br-none"
+            : "w-full bg-gray-100 text-gray-900"
         }`}
       >
         {/* 마크다운 렌더링 */}

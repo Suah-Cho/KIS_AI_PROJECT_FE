@@ -100,12 +100,19 @@ export default function MessageWindow({
 
     const chatState = (
         <div className="flex flex-col flex-1 overflow-hidden">
-            <div ref={scrollWrapRef} className="flex-1 min-h-0 overflow-y-auto p-4 w-full max-w-4xl mx-auto">
-                {messages.map((m, i) => (
-                    <MessageBubble key={i} role={m.role} content={m.content} />
-                ))}
-                {isLoding && <MessageBubble role="ai" content="답변 생성 중..." />}
-                <div ref={endRef}></div>
+            {/* 전체 폭 스크롤 컨테이너 (스크롤바는 오른쪽 끝) */}
+            <div
+                ref={scrollWrapRef}
+                className="flex-1 min-h-0 overflow-y-auto light-scroll"
+            >
+                {/* 가운데 제한 폭 래퍼 */}
+                <div className="w-full max-w-4xl mx-auto px-6 py-4">
+                    {messages.map((m, i) => (
+                        <MessageBubble key={i} role={m.role} content={m.content} />
+                    ))}
+                    {isLoding && <MessageBubble role="ai" content="답변 생성 중..." />}
+                    <div ref={endRef} />
+                </div>
             </div>
             <div className="w-full max-w-4xl mx-auto py-2 shrink-0">
                 <MessageInput onSend={handleSend} selectedModel={selectedModel}/>
