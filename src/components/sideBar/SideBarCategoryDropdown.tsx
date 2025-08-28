@@ -1,25 +1,21 @@
 import { useState } from "react"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { categories, type  CategoryOption } from "../../constants/categories";
 
-const categories = [
-    { id: 'auto', name: '자동선택' },
-    { id: 'acc', name: '회계 규정' },
-    { id: 'aud', name: '감사 규정' },
-    { id: 'hr', name: '인사 규정' },
-    { id: 'it', name: 'IT/보안 규정' },
-    { id: 'org', name: '회사 조직 규정' },
-    { id: 'work', name: '업무메뉴얼' },
-    { id: 'etc', name: '기타' },
-]
-
-export default function SideBarCategoryDropdown() {
+export default function SideBarCategoryDropdown({
+    categoryValue, onCategoryChange
+}:{
+    categoryValue: CategoryOption;
+    onCategoryChange: (value: CategoryOption) => void;
+}) {
     const [ isOpen, setIsOpen ] = useState(false);
-    const [ selected, setSelected ] = useState(categories[0]);
+
+    const current = categories.find(c => c.id === (categoryValue.id ?? 'auto')) ?? categories[0];
     
-    const handleSelect = ( category : { id: string; name: string } ) => {
-        setSelected(category);
+    const handleSelect = ( category : CategoryOption ) => {
+        onCategoryChange(category.id === 'auto' ? categories[0] : category);
         setIsOpen(false);
-        
+        console.log("Selected category:", category);
     }
 
     return (
@@ -28,7 +24,7 @@ export default function SideBarCategoryDropdown() {
                 onClick={() => setIsOpen(!isOpen)}
                 className="w-full flex justify-between items-center px-3 py-2 bg-gray-700 text-white rounded hover:bg-gray-600"
             >
-                <span>{selected ? selected.name: "자동선택" }</span>
+                <span>{current.name}</span>
                 { isOpen ? <FiChevronUp /> : <FiChevronDown /> }
             </button>
             {/* 옵션 목록 */}

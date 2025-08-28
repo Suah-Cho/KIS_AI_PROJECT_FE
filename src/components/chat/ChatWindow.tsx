@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 import SideBar from "../sideBar/SideBar";
 import MessageWindow from "../message/MessageWindow";
 import TopBar from "../model/TopBar";
+import { categories, type CategoryOption } from "../../constants/categories";
 
 export default function ChatWindow() {
     const [ isOpen, setIsOpen ] = useState(true);
     const [ mwKey, setMwKey ] = useState(() => crypto?.randomUUID?.() ?? String(Date.now()));
     const [ modelValue, setModelValue ] = useState("gemma3:27b");
+    const [ category, setCategory ] = useState<CategoryOption>(categories[0]);
 
     const handleNewChat = () => {
         setMwKey(crypto?.randomUUID?.() ?? String(Date.now()));
@@ -42,6 +44,8 @@ export default function ChatWindow() {
                         isOpen={isOpen} 
                         onToggle={() => setIsOpen(!isOpen)} 
                         onNewChat={handleNewChat}
+                        categoryValue={category}
+                        onCategoryChange={setCategory}
                     />
                 </div>
                 <div className="flex flex-col flex-1">
@@ -49,8 +53,8 @@ export default function ChatWindow() {
                         <TopBar modelValue={modelValue} onModelChange={setModelValue} />
                     </div>
                     <Routes>
-                        <Route path="/" element={<MessageWindow key={mwKey} selectedModel={modelValue}/>} />
-                        <Route path="/:chatId" element={<MessageWindow key={mwKey} selectedModel={modelValue}/>} />
+                        <Route path="/" element={<MessageWindow key={mwKey} selectedModel={modelValue} selectedCategory={category}/>} />
+                        <Route path="/:chatId" element={<MessageWindow key={mwKey} selectedModel={modelValue} selectedCategory={category}/>} />
                     </Routes>
 
                 </div>

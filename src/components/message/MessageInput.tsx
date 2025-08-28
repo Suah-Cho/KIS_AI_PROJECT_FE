@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import {  FiPlus } from "react-icons/fi";
 import { LuSend } from "react-icons/lu";
+import { type CategoryOption } from "../../constants/categories";
 
 export default function MessageInput({ 
-    onSend, selectedModel 
+    onSend, selectedModel, selectedCategory
 } : { 
-    onSend: (text: string, model: string) => void;
+    onSend: (text: string, model: string, category: string) => void;
     selectedModel: string;
+    selectedCategory: CategoryOption;
 }) {
     const [ inputValue, setInputValue ] = useState("");
     const taRef = useRef<HTMLTextAreaElement>(null);
@@ -18,7 +20,7 @@ export default function MessageInput({
     const handleSend = async () => {
         if (!inputValue.trim()) return ;
 
-        onSend(inputValue, selectedModel);
+        onSend(inputValue, selectedModel, selectedCategory.id);
         setInputValue("");
     }
 
@@ -26,7 +28,7 @@ export default function MessageInput({
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             const text = inputValue.trim();
-            if (text) onSend(text, selectedModel);
+            if (text) onSend(text, selectedModel, selectedCategory.id);
             setInputValue("");
             requestAnimationFrame(autoResize);
           }

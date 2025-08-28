@@ -7,15 +7,15 @@ export default function MessageBubble({ role, content }: MessageBubbleProps) {
 
   return (
     <div
-      className={`flex w-full my-2 ${
+      className={`flex w-full my-6 ${
         isUser ? "justify-end" : "justify-start"
       }`}
     >
       <div
-        className={`px-4 py-2 rounded-lg break-words ${
+        className={`px-4 py-3 rounded-lg break-words ${
           isUser
             ? "max-w-[70%] bg-gray-200 text-gray-900 rounded-br-none"
-            : "w-full bg-gray-100 text-gray-900"
+            : "w-full text-gray-900"
         }`}
       >
         {/* 마크다운 렌더링 */}

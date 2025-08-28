@@ -5,13 +5,16 @@ import SideProfilePanel from "./SideProfilePanel";
 import SideBarCategoryDropdown from "./SideBarCategoryDropdown";
 import { TbCategoryFilled } from "react-icons/tb";
 import SideChatHistory from "./SideChatHistory";
+import { type CategoryOption } from "../../constants/categories";
 
 export default function SideBar({
-    isOpen, onToggle, onNewChat
+    isOpen, onToggle, onNewChat, categoryValue, onCategoryChange
 }: {
     isOpen: boolean;
     onToggle: () => void;
     onNewChat: () => void;
+    categoryValue: CategoryOption;
+    onCategoryChange: (value: CategoryOption) => void;
 }) {
     const [panelOpen, setPanelOpen] = useState(false);
     const panelRef = useRef<HTMLDivElement>(null);
@@ -41,7 +44,7 @@ export default function SideBar({
                             <TbCategoryFilled className="mr-2" />
                             <span className="">카테고리 선택</span>
                         </div>
-                        <SideBarCategoryDropdown />
+                        <SideBarCategoryDropdown categoryValue={categoryValue} onCategoryChange={onCategoryChange}/>
                     </div>
                 )
             }

@@ -4,11 +4,13 @@ import MessageInput from "./MessageInput";
 import { useEffect, useRef, useState } from "react";
 import { getLLMMessages, sendLLMMessage } from "../../api/llm";
 import { useNavigate, useParams } from "react-router-dom";
+import { type CategoryOption } from "../../constants/categories";
 
 export default function MessageWindow({
-    selectedModel
+    selectedModel, selectedCategory
 }:{
-    selectedModel: string
+    selectedModel: string;
+    selectedCategory: CategoryOption;
 }) {
     const navigate = useNavigate();
     
@@ -68,13 +70,13 @@ export default function MessageWindow({
         return newId;
     };
 
-    const handleSend = async (text: string, model: string) => {
+    const handleSend = async (text: string, model: string, category: string) => {
         const id = ensureChatId();
         setMessages(prev => [...prev, { role: "human", content: text }]);
         setIsLoding(true);
 
         try {
-            const resp = await sendLLMMessage(text, id, model);
+            const resp = await sendLLMMessage(text, id, model, category);
             console.log("LLM 응답 데이터:", resp);
             if (resp.data?.response) {
                 setMessages(resp.data.response);
@@ -93,7 +95,7 @@ export default function MessageWindow({
                 환영합니다! 메시지를 입력하여 대화를 시작하세요.
             </p>
             <div className="w-full max-w-2xl">
-                <MessageInput onSend={handleSend} selectedModel={selectedModel}/>
+                <MessageInput onSend={handleSend} selectedModel={selectedModel} selectedCategory={selectedCategory}/>
             </div>
         </div>
     );
@@ -115,7 +117,7 @@ export default function MessageWindow({
                 </div>
             </div>
             <div className="w-full max-w-4xl mx-auto py-2 shrink-0">
-                <MessageInput onSend={handleSend} selectedModel={selectedModel}/>
+                <MessageInput onSend={handleSend} selectedModel={selectedModel} selectedCategory={selectedCategory} />
             </div>
         </div>
     );
