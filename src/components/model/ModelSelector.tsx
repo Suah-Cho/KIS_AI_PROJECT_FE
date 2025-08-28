@@ -6,8 +6,13 @@ const models = [
     { id: "qwen3:30b", name: "Qwen" },
 ]
 
-export default function ModelSelector() {
-    const [ selected, setSelected ] = useState(models[0]);
+export default function ModelSelector({
+    modelValue, onModelChange
+}: {
+    modelValue: string;
+    onModelChange: (id: string) => void;
+}) {
+    const selected = models.find(m => m.id === modelValue) ?? models[0];
     const [ isOpen, setIsOpen ] = useState(false);
 
     return (
@@ -25,12 +30,16 @@ export default function ModelSelector() {
                     <li
                     key={model.id}
                     onClick={() => {
-                        setSelected(model);
+                        if (typeof onModelChange !== "function") {
+                            console.warn("onModelChange 없음:", onModelChange);
+                            return;
+                          }
+                        onModelChange(model.id);
                         setIsOpen(false);
                         console.log("선택한 모델:", model.id);
                     }}
                     className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
-                        selected.id === model.id ? "bg-gray-200 font-semibold" : ""
+                        modelValue === model.id ? "bg-gray-200 font-semibold" : ""
                     }`}
                     >
                     {model.name}

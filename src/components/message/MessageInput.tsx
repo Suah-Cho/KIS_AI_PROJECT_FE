@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import {  FiPlus } from "react-icons/fi";
 import { LuSend } from "react-icons/lu";
 
-export default function MessageInput({ onSend } : { onSend: (text: string) => void }) {
+export default function MessageInput({ 
+    onSend, selectedModel 
+} : { 
+    onSend: (text: string, model: string) => void;
+    selectedModel: string;
+}) {
     const [ inputValue, setInputValue ] = useState("");
     const taRef = useRef<HTMLTextAreaElement>(null);
 
@@ -13,7 +18,7 @@ export default function MessageInput({ onSend } : { onSend: (text: string) => vo
     const handleSend = async () => {
         if (!inputValue.trim()) return ;
 
-        onSend(inputValue);
+        onSend(inputValue, selectedModel);
         setInputValue("");
     }
 
@@ -21,7 +26,7 @@ export default function MessageInput({ onSend } : { onSend: (text: string) => vo
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             const text = inputValue.trim();
-            if (text) onSend(text);
+            if (text) onSend(text, selectedModel);
             setInputValue("");
             requestAnimationFrame(autoResize);
           }

@@ -1,12 +1,27 @@
 import type { MessageBubbleProps } from "../../type/message";
 import MessageBubble from "./MessageBubble";
 import MessageInput from "./MessageInput";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getLLMMessages, sendLLMMessage } from "../../api/llm";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function MessageWindow() {
+export default function MessageWindow({
+    selectedModel
+}:{
+    selectedModel: string
+}) {
     const navigate = useNavigate();
+    
+    const scrollWrapRef = useRef<HTMLDivElement>(null);
+    const endRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = (smooth = true) => {
+        if (endRef.current) {
+            endRef.current.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "end" });
+        } else if (scrollWrapRef.current) {
+            scrollWrapRef.current.scrollTop = scrollWrapRef.current.scrollHeight;
+        }
+    }
 
     const [ messages, setMessages ] = useState<MessageBubbleProps[]>([]);
     const [ isLoding, setIsLoding ] = useState(false);
@@ -16,6 +31,7 @@ export default function MessageWindow() {
     const [ chatId, setChatId ] = useState<string | null>(routeChatId ?? null);
     
     useEffect(() => {
+
         let cancelled = false;
 
         if (!routeChatId) {
@@ -39,8 +55,13 @@ export default function MessageWindow() {
                 if (!cancelled) setIsLoadingHistory(false);
             }
         })();
-        
+        return () => { cancelled = true; }
     }, [routeChatId]);
+
+    useEffect(() => {
+        // if (isLoding) return;
+        scrollToBottom(true);
+    }, [messages, isLoding]);
 
     const ensureChatId = () => {
         if (chatId) return chatId;
@@ -51,13 +72,13 @@ export default function MessageWindow() {
         return newId;
     };
 
-    const handleSend = async (text: string) => {
+    const handleSend = async (text: string, model: string) => {
         const id = ensureChatId();
         setMessages(prev => [...prev, { role: "human", content: text }]);
         setIsLoding(true);
 
         try {
-            const resp = await sendLLMMessage(text, id);
+            const resp = await sendLLMMessage(text, id, model);
             console.log("LLM 응답 데이터:", resp);
             // 서버 응답이 전체 대화 배열이면 그대로 세팅
             if (resp.data?.response) {
@@ -77,14 +98,14 @@ export default function MessageWindow() {
                 환영합니다! 메시지를 입력하여 대화를 시작하세요.
             </p>
             <div className="w-full max-w-2xl">
-                <MessageInput onSend={handleSend} />
+                <MessageInput onSend={handleSend} selectedModel={selectedModel}/>
             </div>
         </div>
     );
 
     const chatState = (
         <div className="flex flex-col flex-1 overflow-hidden">
-            <div className="flex-1 min-h-0 overflow-y-auto p-4 w-full max-w-4xl mx-auto">
+            <div ref={scrollWrapRef} className="flex-1 min-h-0 overflow-y-auto p-4 w-full max-w-4xl mx-auto">
                 {/* {isLoadingHistory && (
                     <div className="text-gray-500 text-sm py-2">이전 대화를 불러오는 중...</div>
                 )} */}
@@ -92,9 +113,10 @@ export default function MessageWindow() {
                     <MessageBubble key={i} role={m.role} content={m.content} />
                 ))}
                 {isLoding && <MessageBubble role="ai" content="답변 생성 중..." />}
+                <div ref={endRef}></div>
             </div>
             <div className="w-full max-w-4xl mx-auto py-2 shrink-0">
-                <MessageInput onSend={handleSend} />
+                <MessageInput onSend={handleSend} selectedModel={selectedModel}/>
             </div>
         </div>
     );
