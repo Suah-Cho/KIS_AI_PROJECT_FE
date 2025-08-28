@@ -36,7 +36,6 @@ export default function ModelSelector({
                           }
                         onModelChange(model.id);
                         setIsOpen(false);
-                        console.log("선택한 모델:", model.id);
                     }}
                     className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
                         modelValue === model.id ? "bg-gray-200 font-semibold" : ""

@@ -50,7 +50,6 @@ export default function SideChatHistory() {
         // setLoading(true);
         try {
           const list = await getLLMChatList();
-          console.log("히스토리 불러오기 성공:", list);
           setHistory(list);
         } catch (e) {
           console.error("히스토리 불러오기 실패:", e);

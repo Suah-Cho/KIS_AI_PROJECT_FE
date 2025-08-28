@@ -14,9 +14,10 @@ export default function ChatWindow() {
     const handleNewChat = () => {
         setMwKey(crypto?.randomUUID?.() ?? String(Date.now()));
 
-        const base = import.meta.env.BASE_URL?.replace(/\/+$/,"") || "";
+        const base = (import.meta.env.BASE_URL?.replace(/\/+$/,"") || "");
         const rootPath = base || "/";
         if (window.location.pathname !== rootPath) {
+            // 기존 chatId 제거 → emptyState 조건 만족
             window.history.pushState({}, "", rootPath);
         }
     };

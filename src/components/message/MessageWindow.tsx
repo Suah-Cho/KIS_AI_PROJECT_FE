@@ -25,7 +25,6 @@ export default function MessageWindow({
 
     const [ messages, setMessages ] = useState<MessageBubbleProps[]>([]);
     const [ isLoding, setIsLoding ] = useState(false);
-    const [isLoadingHistory, setIsLoadingHistory] = useState(false);
 
     const { chatId: routeChatId } = useParams<{ chatId: string }>();
     const [ chatId, setChatId ] = useState<string | null>(routeChatId ?? null);
@@ -40,7 +39,6 @@ export default function MessageWindow({
             return;
         }
         setChatId(routeChatId);
-        setIsLoadingHistory(true);
         (async () => {
             try {
                 const resp = await getLLMMessages(routeChatId);
@@ -52,14 +50,13 @@ export default function MessageWindow({
                 if (!cancelled) setMessages([]);
                 console.error(`메시지 기록 불러오기 실패: ${error}`);
             } finally {
-                if (!cancelled) setIsLoadingHistory(false);
+                if (!cancelled) setIsLoding(false);
             }
         })();
         return () => { cancelled = true; }
     }, [routeChatId]);
 
     useEffect(() => {
-        // if (isLoding) return;
         scrollToBottom(true);
     }, [messages, isLoding]);
 
@@ -67,7 +64,6 @@ export default function MessageWindow({
         if (chatId) return chatId;
         const newId = crypto?.randomUUID?.() ?? String(Date.now());
         setChatId(newId);
-        // /{uuid} 로 이동 (히스토리 추가)
         navigate(`/${newId}`, { replace: false });
         return newId;
     };
@@ -80,7 +76,6 @@ export default function MessageWindow({
         try {
             const resp = await sendLLMMessage(text, id, model);
             console.log("LLM 응답 데이터:", resp);
-            // 서버 응답이 전체 대화 배열이면 그대로 세팅
             if (resp.data?.response) {
                 setMessages(resp.data.response);
             }
@@ -106,9 +101,6 @@ export default function MessageWindow({
     const chatState = (
         <div className="flex flex-col flex-1 overflow-hidden">
             <div ref={scrollWrapRef} className="flex-1 min-h-0 overflow-y-auto p-4 w-full max-w-4xl mx-auto">
-                {/* {isLoadingHistory && (
-                    <div className="text-gray-500 text-sm py-2">이전 대화를 불러오는 중...</div>
-                )} */}
                 {messages.map((m, i) => (
                     <MessageBubble key={i} role={m.role} content={m.content} />
                 ))}
@@ -123,7 +115,7 @@ export default function MessageWindow({
 
     return (
         <div className="flex flex-col flex-1 bg-gray-100 overflow-hidden">
-            {messages.length === 0 && !chatId && !isLoadingHistory
+            {messages.length === 0 && !chatId && !isLoding
                 ? emptyState
                 : chatState}
         </div>
