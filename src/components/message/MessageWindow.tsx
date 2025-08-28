@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { getLLMMessages, sendLLMMessage } from "../../api/llm";
 import { useNavigate, useParams } from "react-router-dom";
 import { type CategoryOption } from "../../constants/categories";
+import { toast } from "react-hot-toast";
+
 
 export default function MessageWindow({
     selectedModel, selectedCategory
@@ -45,8 +47,12 @@ export default function MessageWindow({
             try {
                 const resp = await getLLMMessages(routeChatId);
                 if (cancelled) return;
-                if (resp.data?.response) {
-                    setMessages(resp.data.response);
+                if (resp.status === 404) {
+                    toast.error(`${resp.data.message}`);
+                    return;
+                  }
+                if (resp.data.data?.response) {
+                    setMessages(resp.data.data.response);
                 }
             } catch (error) {
                 if (!cancelled) setMessages([]);
