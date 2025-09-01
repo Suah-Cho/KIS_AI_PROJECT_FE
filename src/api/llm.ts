@@ -8,6 +8,7 @@ export async function sendLLMMessage(question: string, chatId: string, model: st
     const res = await api.post(`${API_BASE_URL}/llm/${chatId}`, {
         question: question,
         model: model,
+        category: category
     });
     return res.data;
 }

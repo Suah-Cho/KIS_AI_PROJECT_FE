@@ -49,16 +49,19 @@ export default function MessageWindow({
                 if (cancelled) return;
                 if (resp.status === 404) {
                     toast.error(`${resp.data.message}`);
+                    setMessages([]);
+                    navigate("/", { replace: true });
                     return;
                   }
-                if (resp.data.data?.response) {
-                    setMessages(resp.data.data.response);
-                }
+                  setMessages(resp.data?.data?.response ?? []);
             } catch (error) {
-                if (!cancelled) setMessages([]);
-                console.error(`메시지 기록 불러오기 실패: ${error}`);
+                if (!cancelled) {
+                    console.error("메시지 기록 불러오기 실패:", error);
+                    setMessages([]);
+                }
             } finally {
                 if (!cancelled) setIsLoding(false);
+                console.log("[getLLMMessages] fetch end");
             }
         })();
         return () => { cancelled = true; }

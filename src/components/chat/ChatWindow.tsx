@@ -6,11 +6,12 @@ import SideBar from "../sideBar/SideBar";
 import MessageWindow from "../message/MessageWindow";
 import TopBar from "../model/TopBar";
 import { categories, type CategoryOption } from "../../constants/categories";
+import { models } from "../../constants/model";
 
 export default function ChatWindow() {
     const [ isOpen, setIsOpen ] = useState(true);
     const [ mwKey, setMwKey ] = useState(() => crypto?.randomUUID?.() ?? String(Date.now()));
-    const [ modelValue, setModelValue ] = useState("gemma3:27b");
+    const [ modelValue, setModelValue ] = useState(models[0].id);
     const [ category, setCategory ] = useState<CategoryOption>(categories[0]);
 
     const handleNewChat = () => {

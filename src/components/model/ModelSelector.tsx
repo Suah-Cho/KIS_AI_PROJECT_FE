@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 
-const models = [
-    { id: "gemma3:27b", name: "Gemma3"},
-    { id: "qwen3:30b", name: "Qwen" },
-]
+import { models } from "../../constants/model";
 
 export default function ModelSelector({
     modelValue, onModelChange
