@@ -1,6 +1,6 @@
 
 // 전체 채팅 레이아웃
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SideBar from "../sideBar/SideBar";
 import MessageWindow from "../message/MessageWindow";
@@ -38,7 +38,7 @@ export default function ChatWindow() {
     }, []);
     
     return (
-        <BrowserRouter basename={import.meta.env.BASE_URL}>
+        
             <div className="flex h-screen">
                 <div className="h-full flex overflow-hidden">
                     <SideBar 
@@ -59,8 +59,6 @@ export default function ChatWindow() {
                     </Routes>
 
                 </div>
-            </div>
-        </BrowserRouter>
-        
+            </div>       
     );
 }

@@ -1,7 +1,7 @@
 import { FiUser } from "react-icons/fi";
 
 export default function SideProfile(
-    { isOpen, onClick } : { isOpen: boolean; onClick: () => void; }
+    { isOpen, onClick, username } : { isOpen: boolean; onClick: () => void; username: string | null }
 ) {
     return (
         <div className="px-2 py-4 border-t border-gray-700">
@@ -14,7 +14,7 @@ export default function SideProfile(
                 <span
                     className={`overflow-hidden transition-all duration-300 whitespace-nowrap
                     ${isOpen ? "ml-3 w-auto opacity-100" : "w-0 opacity-0"}
-                    `}>사용자 이름
+                    `}>{username ?? "Guest"}
                 </span>
             </button>
         </div>

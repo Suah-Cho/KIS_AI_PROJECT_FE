@@ -1,24 +1,22 @@
-// import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import ChatWindow from "./components/chat/ChatWindow";
-// import { useChat } from "./hooks/useChat";
-// import Login from "./components/login/Login";
+import Login from "./components/login/Login";
 import { Toaster } from "react-hot-toast";
 
 function App() {
+  console.log(!!localStorage.getItem("accessToken"))
+  const isLoggedIn = !!localStorage.getItem("accessToken");
 
   return (
-    // <Router>
-    //   <Routes>
-    //     <Route path="/login" element={<Login />} />
-    //     <Route
-    //       path="/chat"
-    //       element={isLoggedIn ? <ChatWindow messages={messages} onSend={sendMessage} /> : <Navigate to="/login" />}
-    //     />
-    //     <Route path="*" element={<Navigate to={isLoggedIn ? "/chat" : "/login"} />} />
-    //   </Routes>
-    // </Router>
     <>
-      <ChatWindow />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/*"
+          element={isLoggedIn ? <ChatWindow /> : <Navigate to="/login" />}
+        />
+        <Route path="*" element={<Navigate to={isLoggedIn ? "/" : "/login"} replace />} />
+      </Routes>
       <Toaster
         position="bottom-right"
         gutter={12}

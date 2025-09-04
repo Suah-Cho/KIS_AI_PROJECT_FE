@@ -1,13 +1,29 @@
 import React, { useState } from "react";
+import { Login as LoginAPI } from "../../api/auth";
 
 export default function Login() {
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("로그인 시도:", { email, password });
-        alert(`${email}님 환영합니다!`)
+        
+        try {
+            const resp = await LoginAPI(email, password);
+            console.log("로그인 성공:", resp);
+
+            if (resp.status === 200) {
+                localStorage.setItem("accessToken", resp.data.data.access_token);
+                localStorage.setItem("UserId", resp.data.data.sub);
+            } else {
+                alert("로그인에 실패했습니다. 다시 시도해주세요.");
+            }
+            
+        } catch (error) {
+            console.error("로그인 실패:", error);
+            // alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        }
     }
 
     return (

@@ -45,7 +45,13 @@ export default function MessageWindow({
         setChatId(routeChatId);
         (async () => {
             try {
-                const resp = await getLLMMessages(routeChatId);
+                const userId = localStorage.getItem("UserId");
+                if (!userId) {
+                    toast.error("사용자 정보가 없습니다. 다시 로그인 해주세요.");
+                    navigate("/login", { replace: true });
+                    return;
+                }
+                const resp = await getLLMMessages(routeChatId, userId);
                 if (cancelled) return;
                 if (resp.status === 404) {
                     toast.error(`${resp.data.message}`);
@@ -85,7 +91,11 @@ export default function MessageWindow({
         setIsLoding(true);
 
         try {
-            const resp = await sendLLMMessage(text, id, model, category);
+            const userId = localStorage.getItem("UserId") || "";
+            if (!userId) {
+                toast.error("사용자 정보가 없습니다. 다시 로그인 해주세요.");
+            }
+            const resp = await sendLLMMessage(text, id, model, category, userId);
             console.log("LLM 응답 데이터:", resp);
             if (resp.data?.response) {
                 setMessages(resp.data.response);

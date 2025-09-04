@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SideProfile from "./SideProfile";
 import SideNewChat from "./SideNewChat";
 import SideProfilePanel from "./SideProfilePanel";
@@ -6,6 +6,7 @@ import SideBarCategoryDropdown from "./SideBarCategoryDropdown";
 import { TbCategoryFilled } from "react-icons/tb";
 import SideChatHistory from "./SideChatHistory";
 import { type CategoryOption } from "../../constants/categories";
+import { GetUserInfo } from "../../api/user";
 
 export default function SideBar({
     isOpen, onToggle, onNewChat, categoryValue, onCategoryChange
@@ -16,8 +17,28 @@ export default function SideBar({
     categoryValue: CategoryOption;
     onCategoryChange: (value: CategoryOption) => void;
 }) {
-    const [panelOpen, setPanelOpen] = useState(false);
+    const [ panelOpen, setPanelOpen ] = useState(false);
+    const [ username, setUsername ] = useState<string | null>(null);
     const panelRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const run = async () => {
+            const userId = localStorage.getItem("UserId");
+
+            if (!userId) {
+                return;
+            }
+
+            try {
+                const resp = await GetUserInfo(userId);
+                setUsername(resp.data.data.username);
+
+            } catch (error) {
+                console.error("Get User Info Error:", error);
+            }
+        };
+        run();
+    }, [])
 
     return (
         <div
@@ -59,7 +80,7 @@ export default function SideBar({
             
             <div className="mt-auto relative" ref={panelRef}>
                 {/* 하단 프로필 */}
-                <SideProfile onClick={() => { setPanelOpen(!panelOpen)} } isOpen={isOpen}  />
+                <SideProfile username={username} onClick={() => { setPanelOpen(!panelOpen)} } isOpen={isOpen}  />
                 {/* 프로필 패널 */}
                 {panelOpen && <SideProfilePanel />}
             </div>
