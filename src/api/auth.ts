@@ -21,3 +21,13 @@ export async function Login(username: string, password: string) {
     return res;
 }
 
+
+export async function LogOut(accessToken: string) {
+    console.log(`GET Logout with token: ${accessToken}`);
+    const res = await api.get(`${API_BASE_URL}/auth/logout`, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+    return res;
+}
