@@ -4,7 +4,7 @@ import Login from "./components/login/Login";
 import { Toaster } from "react-hot-toast";
 
 function App() {
-  console.log(!!localStorage.getItem("accessToken"))
+  // console.log(!!localStorage.getItem("accessToken"))
   const isLoggedIn = !!localStorage.getItem("accessToken");
 
   return (

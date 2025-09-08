@@ -4,7 +4,7 @@ import api from './axios';
 const API_BASE_URL = `http://10.98.46.91/api`
 
 export async function sendLLMMessage(question: string, chatId: string, model: string, category: string, userId: string) {
-    console.log("sendLLMMessage called with:", { question, chatId, model, category, userId });
+    // console.log("sendLLMMessage called with:", { question, chatId, model, category, userId });
     const res = await api.post(`${API_BASE_URL}/llm/${chatId}?user_id=${userId}`, {
         question: question,
         model: model,
@@ -14,7 +14,7 @@ export async function sendLLMMessage(question: string, chatId: string, model: st
 }
 
 export async function getLLMMessages(chatId: string, userId: string) {
-    console.log("getLLMMessages called with:", { chatId, userId });
+    // console.log("getLLMMessages called with:", { chatId, userId });
     const res = await api.get(`${API_BASE_URL}/llm?chat_id=${chatId}&user_id=${userId}`, {
         validateStatus: () => true,
     });
