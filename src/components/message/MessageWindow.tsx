@@ -129,7 +129,7 @@ export default function MessageWindow({
                 {/* 가운데 제한 폭 래퍼 */}
                 <div className="w-full max-w-4xl mx-auto px-6 py-4">
                     {messages.map((m, i) => (
-                        <MessageBubble key={i} role={m.role} content={m.content} />
+                        <MessageBubble key={i} role={m.role} content={m.content} source={m.source} />
                     ))}
                     {isLoding && <MessageBubble role="ai" content="답변 생성 중..." />}
                     <div ref={endRef} />

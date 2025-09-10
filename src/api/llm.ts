@@ -18,6 +18,7 @@ export async function getLLMMessages(chatId: string, userId: string) {
     const res = await api.get(`${API_BASE_URL}/llm?chat_id=${chatId}&user_id=${userId}`, {
         validateStatus: () => true,
     });
+    console.log(`res: ${res}`)
     return res;
 }
 

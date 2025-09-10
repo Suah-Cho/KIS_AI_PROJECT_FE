@@ -5,6 +5,7 @@ export interface CategoryOption {
 
 export const categories: CategoryOption[] = [
     { id: 'auto', name: '자동선택' },
+    { id: 'share', name: '쉐어 검색'},
     { id: 'acc', name: '회계 규정' },
     { id: 'aud', name: '감사 규정' },
     { id: 'hr', name: '인사 규정' },
