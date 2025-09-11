@@ -110,7 +110,7 @@ export default function MessageWindow({
     
     const emptyState = (
         <div className="flex-1 flex flex-col items-center justify-center space-y-6">
-            <p className="text-gray-700 text-lg font-medium">
+            <p className="text-gray-700 text-lg font-medium dark:text-gray-200">
                 환영합니다! 메시지를 입력하여 대화를 시작하세요.
             </p>
             <div className="w-full max-w-2xl">
@@ -142,7 +142,7 @@ export default function MessageWindow({
     );
 
     return (
-        <div className="flex flex-col flex-1 bg-gray-100 overflow-hidden">
+        <div className="flex flex-col flex-1 overflow-hidden bg-gray-50 dark:bg-gray-800">
             {messages.length === 0 && !chatId && !isLoding
                 ? emptyState
                 : chatState}

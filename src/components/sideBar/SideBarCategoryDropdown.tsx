@@ -22,19 +22,19 @@ export default function SideBarCategoryDropdown({
         <div className="relative w-full">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex justify-between items-center px-3 py-2 bg-gray-700 text-white rounded hover:bg-gray-600"
+                className="w-full flex justify-between items-center px-3 py-2 bg-gray-200 text-black rounded hover:bg-gray-300 dark:hover:bg-gray-600 dark:bg-gray-700 dark:text-white"
             >
                 <span>{current.name}</span>
                 { isOpen ? <FiChevronUp /> : <FiChevronDown /> }
             </button>
             {/* 옵션 목록 */}
             { isOpen && (
-                <ul className="absolute left-0 my-1 w-full bg-gray-700 rounded shadow-lg z-10">
+                <ul className="absolute left-0 my-1 w-full bg-gray-200 rounded shadow-lg z-10 dark:bg-gray-800 dark:text-white">
                     {categories.map((cat) => (
                         <li
                         key={cat.id}
                         onClick={() => handleSelect(cat)}
-                        className="px-3 py-2 hover:bg-gray-600 cursor-pointer"
+                        className="px-3 py-2 hover:bg-gray-300 cursor-pointer dark:hover:bg-gray-600"
                         >
                         {cat.name}
                         </li>

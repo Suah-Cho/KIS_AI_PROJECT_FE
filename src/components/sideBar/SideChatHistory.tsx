@@ -31,8 +31,9 @@ export default function SideChatHistory() {
       setDeletingId(id);
 
       setHistory((prev) => prev.filter(h => h.chat_id !== id));
-
-      const resp = await deleteLLMChat(id);
+      
+      const userId = localStorage.getItem("UserId") || "";
+      const resp = await deleteLLMChat(id, userId);
       setDeletingId(null);
 
       if (resp != 204) {
@@ -66,9 +67,9 @@ export default function SideChatHistory() {
                     title={h.title}
                     onClick={() => openChat(h.chat_id)}
                     className="w-full text-left rounded-md px-2.5 py-2 pr-9 text-sm
-                              hover:bg-gray-700 focus:bg-gray-700 focus:outline-none flex items-start"
+                              hover:bg-gray-200 dark:hover:bg-gray-700  focus:outline-none flex items-start"
                   >
-                    <span className="flex-1 whitespace-nowrap overflow-hidden text-white">
+                    <span className="flex-1 whitespace-nowrap overflow-hidden text-gray-800 dark:text-white">
                       {trimTitle(h.title)}
                     </span>
                   </button>
@@ -78,7 +79,7 @@ export default function SideChatHistory() {
                     aria-label="삭제"
                     onClick={(e) => { e.stopPropagation(); handleDelete(h.chat_id); }}
                     className={`absolute right-1 top-1 p-1 rounded
-                                text-gray-400 hover:text-red-500 hover:bg-red-500/10
+                                text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-500
                                 opacity-0 group-hover:opacity-100 focus:opacity-100
                                 transition-opacity duration-150
                                 ${deletingId === h.chat_id ? "opacity-100 animate-pulse" : ""}`}

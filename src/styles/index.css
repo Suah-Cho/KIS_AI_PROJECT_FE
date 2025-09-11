@@ -33,3 +33,6 @@
 .light-scroll.hide-until-hover:hover::-webkit-scrollbar-thumb {
   background: rgba(0,0,0,0.18);
 }
+
+:root { --accent: #6366f1; }
+html.dark { color-scheme: dark; }

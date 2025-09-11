@@ -40,8 +40,8 @@ export default function MessageBubble({ role, content, source }: MessageBubblePr
       <div
         className={`px-4 py-3 rounded-lg break-words ${
           isUser
-            ? "max-w-[70%] bg-gray-200 text-gray-900 rounded-br-none"
-            : "w-full text-gray-900"
+            ? "max-w-[70%] bg-gray-200 text-gray-900 rounded-br-none dark:bg-gray-700 dark:text-white"
+            : "w-full text-gray-900 dark:text-white bg-gray-50 rounded-bl-none dark:bg-gray-800 border border-gray-300 dark:border-gray-600"
         }`}
       >
         {/* 마크다운 렌더링 */}

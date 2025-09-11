@@ -28,7 +28,12 @@ export async function getLLMChatList(): Promise<ChatHistoryItem[]> {
     return res.data.data;
 }
 
-export async function deleteLLMChat(chatId: string) {
-    const res = await api.delete(`${API_BASE_URL}/llm/reset/${chatId}`);
+export async function deleteLLMChat(chatId: string, userId: string) {
+    const res = await api.delete(`${API_BASE_URL}/llm/reset/${chatId}?user_id=${userId}`);
     return res.status;
+}
+
+export async function deleteLLMChatAll(userId: string) {
+    const res = await api.delete(`${API_BASE_URL}/llm/reset_all?user_id=${userId}`);
+    return res;
 }

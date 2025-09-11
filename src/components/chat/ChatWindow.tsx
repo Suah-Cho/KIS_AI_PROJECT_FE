@@ -38,27 +38,26 @@ export default function ChatWindow() {
     }, []);
     
     return (
-        
-            <div className="flex h-screen">
-                <div className="h-full flex overflow-hidden">
-                    <SideBar 
-                        isOpen={isOpen} 
-                        onToggle={() => setIsOpen(!isOpen)} 
-                        onNewChat={handleNewChat}
-                        categoryValue={category}
-                        onCategoryChange={setCategory}
-                    />
+        <div className="flex h-screen">
+            <div className="h-full flex overflow-hidden">
+                <SideBar 
+                    isOpen={isOpen} 
+                    onToggle={() => setIsOpen(!isOpen)} 
+                    onNewChat={handleNewChat}
+                    categoryValue={category}
+                    onCategoryChange={setCategory}
+                />
+            </div>
+            <div className="flex flex-col flex-1">
+                <div className="sticky top-0 z-10 shadow bg-white dark:bg-gray-800 ">
+                    <TopBar modelValue={modelValue} onModelChange={setModelValue} />
                 </div>
-                <div className="flex flex-col flex-1">
-                    <div className="sticky top-0 z-10 bg-white shadow">
-                        <TopBar modelValue={modelValue} onModelChange={setModelValue} />
-                    </div>
-                    <Routes>
-                        <Route path="/" element={<MessageWindow key={mwKey} selectedModel={modelValue} selectedCategory={category}/>} />
-                        <Route path="/:chatId" element={<MessageWindow key={mwKey} selectedModel={modelValue} selectedCategory={category}/>} />
-                    </Routes>
+                <Routes>
+                    <Route path="/" element={<MessageWindow key={mwKey} selectedModel={modelValue} selectedCategory={category}/>} />
+                    <Route path="/:chatId" element={<MessageWindow key={mwKey} selectedModel={modelValue} selectedCategory={category}/>} />
+                </Routes>
 
-                </div>
-            </div>       
+            </div>
+        </div>      
     );
 }

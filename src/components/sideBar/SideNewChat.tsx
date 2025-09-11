@@ -19,12 +19,12 @@ export default function SideNewChat(
     };
 
     return (
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-300 dark:border-gray-700">
             {/* 왼쪽: 새 채팅 버튼 */}
             {isOpen && (
                 <button
                     onClick={handleNewChat}
-                    className="flex-1 mr-2 hover:bg-gray-600 text-white space-x-6 py-2 px-3 rounded text-sm text-left"
+                    className="flex-1 mr-2  space-x-6 py-2 px-3 rounded text-sm text-left hover:bg-gray-200 text-black dark:text-white dark:hover:bg-gray-700 transition-colors"
                     >
                         <div className="flex items-center">
                             <HiPencilSquare className="text-xl" />
@@ -35,7 +35,7 @@ export default function SideNewChat(
 
             {/* 오른쪽: 햄버거 */}
             <button onClick={onToggle} className="flex-shrink-0 py-2">
-            <FiMenu size={20} />
+            <FiMenu className="text-gray-700 hover:text-black dark:text-white dark:hover:text-gray-200 transition-colors" size={20} />
             </button>
         </div>
     )
