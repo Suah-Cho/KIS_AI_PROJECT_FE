@@ -32,34 +32,40 @@ export default function Login() {
 
     return (
         <>
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 w-full max-w-sm">
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-700">
+            <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 w-full max-w-sm dark:bg-gray-800">
                 <h2 className="text-2xl font-bold mb-6 text-center">로그인</h2>
 
                 {/* 이메일 입력 */}
                 <div className="mb-6">
-                    <label className="block text-gray-700 text-sm font-medium mb-2">
+                    <label className="block text-gray-700 text-sm font-medium mb-2 dark:text-gray-100">
                         이메일
                     </label>
                     <input
                         type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                        placeholder="kis@kisvan.co.kr" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="kis@kisvan.co.kr" className="shadow appearance-none rounded w-full py-2 px-3
+                                                                bg-white text-gray-900 placeholder-gray-400 border border-gray-300
+                                                                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                                                                  dark:bg-gray-100 dark:text-gray-900 dark:placeholder-gray-500 dark:border-gray-300"
                         required />
                 </div>
                 <div className="mb-6">
-                    <label className="block text-gray-700 text-sm font-medium mb-2">
+                    <label className="block text-gray-700 text-sm font-medium mb-2 dark:text-gray-100">
                         비밀번호
                     </label>
                     <input
                         type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                        placeholder="********" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="********" className="shadow appearance-none rounded w-full py-2 px-3
+                                                        bg-white text-gray-900 placeholder-gray-400 border border-gray-300
+                                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                                                          dark:bg-gray-100 dark:text-gray-900 dark:placeholder-gray-500 dark:border-gray-300"
                         required />
                 </div>
 
                 {/* 로그인 버튼 */}
                 <button 
                     type="submit"
-                    className="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-400">
+                    className="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600">
                     로그인
                 </button>
             </form>

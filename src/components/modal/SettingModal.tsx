@@ -176,10 +176,10 @@ export default function SettingsContent({
         </h3>
         <div className="flex items-center gap-6 text-sm">
           <label className="flex items-center gap-1">
-            <input type="radio" name="theme" checked={theme==="light"} onChange={() => { setTheme("light"); previewTheme("light"); }} /> Light
+            <input type="radio" name="theme" checked={theme==="light"} onChange={() => { setTheme("light"); previewTheme("light"); applyTheme("light") }} /> Light
           </label>
           <label className="flex items-center gap-1">
-            <input type="radio" name="theme" checked={theme==="dark"} onChange={() => { setTheme("dark"); previewTheme("dark"); }} /> Dark
+            <input type="radio" name="theme" checked={theme==="dark"} onChange={() => { setTheme("dark"); previewTheme("dark"); applyTheme("dark") }} /> Dark
           </label>
         </div>
       </section>
