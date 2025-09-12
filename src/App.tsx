@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { initTheme } from "./utils/Thema";
 
 function App() {
-  localStorage.setItem("accessToken", "dev");
+  // localStorage.setItem("accessToken", "dev");
   const isLoggedIn = !!localStorage.getItem("accessToken");
   const navigate = useNavigate();
 
