@@ -7,7 +7,7 @@ export interface SettingsValues {
 }
 
 export default function SettingsContent({
-  initialSpeed = 3,
+  initialSpeed = 0,
   initialTheme = "light",
   onApply,
   onClose
@@ -28,6 +28,35 @@ export default function SettingsContent({
     localStorage.getItem("shortcut.newChat") || DEFAULT_HOTKEY
   );
   const [recording, setRecording] = useState(false);
+
+  // 속도 단계(-2..2)를 실제 지연(ms)로 변환하는 매핑
+  const speedToDelayMs = (s: number): number => {
+    switch (true) {
+      case s <= -2: return 200;
+      case s === -1: return 120;
+      case s === 0: return 60; // 기본값 60ms
+      case s === 1: return 30;
+      case s >= 2: return 10;
+      default: return 60;
+    }
+  };
+  // 저장된 지연(ms)을 슬라이더 단계로 역매핑
+  const delayMsToSpeed = (ms: number): number => {
+    if (!Number.isFinite(ms)) return 0;
+    if (ms <= 10) return 2;
+    if (ms <= 30) return 1;
+    if (ms <= 60) return 0;
+    if (ms <= 120) return -1;
+    return -2;
+  };
+
+  // 모달 오픈 시 저장값 로드(신규 키 우선, 구키 호환)
+  useEffect(() => {
+    const raw = (localStorage.getItem("settings.streamSpeed") ?? localStorage.getItem("streaming_speed") ?? "60").toString();
+    const n = Number(raw.replace(/[^0-9.-]/g, ""));
+    const ms = Number.isFinite(n) ? Math.max(0, n) : 60;
+    setSpeed(delayMsToSpeed(ms));
+  }, []);
 
   const toStep = (e: KeyboardEvent) => {
     const mods = [
@@ -113,7 +142,6 @@ export default function SettingsContent({
   }, [recording]);
 
   return (
-    // 새 채팅 단축키
     <>
       <div className="space-y-6">
       {/* 새 채팅 단축키 */}
@@ -158,14 +186,14 @@ export default function SettingsContent({
         </h3>
         <input
           type="range"
-          min={1}
-          max={5}
+          min={-2}
+          max={2}
           value={speed}
           onChange={(e)=>setSpeed(Number(e.target.value))}
           className="w-full"
         />
         <p className="text-xs text-gray-500 mt-2 dark:text-gray-200">
-          {speed === 3 ? "Normal" : `x${speed}`}
+          {(() => { const ms = speedToDelayMs(speed); return speed === 0 ? `Normal (${ms}ms)` : (speed > 0 ? `Fast x${speed} (${ms}ms)` : `Slow x${Math.abs(speed)} (${ms}ms)`); })()}
         </p>
       </section>
 
@@ -196,6 +224,8 @@ export default function SettingsContent({
         <button
           onClick={() => {
             localStorage.setItem("shortcut.newChat", hotkey);
+            const delayMs = speedToDelayMs(speed);
+            localStorage.setItem("settings.streamSpeed", String(delayMs));
             onApply?.({ speed, theme });
             onClose();
           }}

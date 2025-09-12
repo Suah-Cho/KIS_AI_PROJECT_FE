@@ -9,7 +9,7 @@ const mql =
     : null;
 
 export function getSavedTheme() {
-  const option = (localStorage.getItem(KEY_OPTION) as ThemeOption) || "default";
+  const option = (localStorage.getItem(KEY_OPTION) as ThemeOption) || "light";
   const customColor = localStorage.getItem(KEY_CUSTOM) || "#19c37d";
   return { option, customColor };
 }

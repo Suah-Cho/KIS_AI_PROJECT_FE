@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { initTheme } from "./utils/Thema";
 
 function App() {
-  // console.log(!!localStorage.getItem("accessToken"))
+  localStorage.setItem("accessToken", "dev");
   const isLoggedIn = !!localStorage.getItem("accessToken");
   const navigate = useNavigate();
 
@@ -88,6 +88,7 @@ function App() {
           element={isLoggedIn ? <ChatWindow /> : <Navigate to="/login" />}
         />
         <Route path="*" element={<Navigate to={isLoggedIn ? "/" : "/login"} replace />} />
+        {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
       </Routes>
 
       <Toaster

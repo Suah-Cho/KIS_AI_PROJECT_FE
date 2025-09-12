@@ -1,6 +1,6 @@
 import api from './axios';
-
-const API_BASE_URL = `http://10.98.46.91/api`
+import { BASE_URL } from './axios'; 
+// const API_BASE_URL = `http://10.98.46.91/api`
 
 export async function Login(username: string, password: string) {
     // console.log("Login POST :", { username, password });
@@ -10,7 +10,7 @@ export async function Login(username: string, password: string) {
     params.append('password', password);
 
     const res = await api.post(
-        `${API_BASE_URL}/auth/login`,
+        `${BASE_URL}/auth/login`,
         params,
         {
             headers: {
@@ -24,7 +24,7 @@ export async function Login(username: string, password: string) {
 
 export async function LogOut(accessToken: string) {
     // console.log(`GET Logout with token: ${accessToken}`);
-    const res = await api.get(`${API_BASE_URL}/auth/logout`, {
+    const res = await api.get(`${BASE_URL}/auth/logout`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
