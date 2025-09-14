@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
     const navigate = useNavigate();
 
-    const [ email, setEmail ] = useState("");
-    const [ password, setPassword ] = useState("");
+    // 개발 모드에서만 기본 이메일/비밀번호를 세팅
+    const isDev = true;
+    const [ email, setEmail ] = useState(isDev ? "kis@kisvan.co.kr" : "");
+    const [ password, setPassword ] = useState(isDev ? "1234" : "");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
