@@ -22,6 +22,17 @@ export default function SettingsContent({
   const saved = getSavedTheme();
   const openedThemeRef = useRef(saved);
   const [theme, setTheme] = useState<ThemeOption>(initialTheme);
+  const appliedRef = useRef(false); // 적용 버튼 눌렀는지 여부
+
+  // 모달이 언마운트될 때(오버레이 클릭/X 포함), 적용하지 않았다면 테마 복원
+  useEffect(() => {
+    return () => {
+      if (!appliedRef.current) {
+        const { option, customColor } = openedThemeRef.current;
+        applyTheme(option, customColor);
+      }
+    };
+  }, []);
 
   const DEFAULT_HOTKEY = "Ctrl+Shift+O";
   const [hotkey, setHotkey] = useState<string>(
@@ -204,10 +215,10 @@ export default function SettingsContent({
         </h3>
         <div className="flex items-center gap-6 text-sm">
           <label className="flex items-center gap-1">
-            <input type="radio" name="theme" checked={theme==="light"} onChange={() => { setTheme("light"); previewTheme("light"); applyTheme("light") }} /> Light
+            <input type="radio" name="theme" checked={theme==="light"} onChange={() => { setTheme("light"); previewTheme("light"); /* applyTheme 제거: 적용 시에만 저장 */ }} /> Light
           </label>
           <label className="flex items-center gap-1">
-            <input type="radio" name="theme" checked={theme==="dark"} onChange={() => { setTheme("dark"); previewTheme("dark"); applyTheme("dark") }} /> Dark
+            <input type="radio" name="theme" checked={theme==="dark"} onChange={() => { setTheme("dark"); previewTheme("dark"); /* applyTheme 제거: 적용 시에만 저장 */ }} /> Dark
           </label>
         </div>
       </section>
@@ -215,7 +226,9 @@ export default function SettingsContent({
       {/* 하단 버튼 */}
       <div className="flex justify-end gap-2 pt-4">
         <button onClick={() => {
+          // 닫기: 원상 복구 후 닫기
           const { option, customColor } = openedThemeRef.current;
+          appliedRef.current = false;
           applyTheme(option, customColor);
           onClose();
         }} className="px-3 py-1.5 text-sm rounded border border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700">
@@ -226,6 +239,9 @@ export default function SettingsContent({
             localStorage.setItem("shortcut.newChat", hotkey);
             const delayMs = speedToDelayMs(speed);
             localStorage.setItem("settings.streamSpeed", String(delayMs));
+            // 적용: 테마 영구 저장
+            appliedRef.current = true;
+            applyTheme(theme);
             onApply?.({ speed, theme });
             onClose();
           }}
