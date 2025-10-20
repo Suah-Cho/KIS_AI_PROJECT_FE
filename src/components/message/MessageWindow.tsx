@@ -142,9 +142,9 @@ export default function MessageWindow({
             const pickString = (v: any): string | null => {
               if (typeof v === "string") return v;
               if (!v || typeof v !== "object") return null;
-              const direct = v.answer ?? v.text ?? v.message ?? v.content ?? null;
+              const direct = v.content ?? v.answer ?? v.text ?? v.message ?? null;
               if (typeof direct === "string" && direct.length) return direct;
-              const nested = v.data?.answer ?? v.data?.text ?? v.data?.message ?? v.data?.content ?? null;
+              const nested = v.data?.content ?? v.data?.answer ?? v.data?.text ?? v.data?.message ?? null;
               if (typeof nested === "string" && nested.length) return nested;
               return null;
             };
