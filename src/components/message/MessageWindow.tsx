@@ -124,39 +124,11 @@ export default function MessageWindow({
             }
             const resp = await sendLLMMessage(text, id, model, category, userId);
 
-            // 서버 응답에서 "마지막 ai 메시지" 내용을 우선 추출
-            const tryPickLastAi = (v: any): string | null => {
-              const arr = Array.isArray(v?.data?.response)
-                ? v.data.response
-                : Array.isArray(v?.response)
-                ? v.response
-                : null;
-              if (!arr) return null;
-              for (let i = arr.length - 1; i >= 0; i--) {
-                const it = arr[i];
-                if (it?.role === "ai" && typeof it?.content === "string") return it.content;
-              }
-              return null;
-            };
+            const fullText = resp?.data?.content ?? "";
 
-            const pickString = (v: any): string | null => {
-              if (typeof v === "string") return v;
-              if (!v || typeof v !== "object") return null;
-              const direct = v.content ?? v.answer ?? v.text ?? v.message ?? null;
-              if (typeof direct === "string" && direct.length) return direct;
-              const nested = v.data?.content ?? v.data?.answer ?? v.data?.text ?? v.data?.message ?? null;
-              if (typeof nested === "string" && nested.length) return nested;
-              return null;
-            };
-
-            let fullText =
-              tryPickLastAi(resp) ??
-              tryPickLastAi((resp as any)?.data) ??
-              pickString(resp) ??
-              pickString((resp as any)?.data) ??
-              "";
             if (!fullText) {
-              try { fullText = JSON.stringify(resp); } catch { /* no-op */ }
+              console.error("No content in response:", resp);
+              throw new Error("응답에서 내용을 찾을 수 없습니다.");
             }
 
             // 글자(또는 그래프림) 단위로 끊어서 표시
